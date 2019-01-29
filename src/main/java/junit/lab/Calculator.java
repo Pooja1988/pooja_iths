@@ -25,4 +25,8 @@ public class Calculator {
 	public double percent(int number1, int asPercentageOf){
 	    return 100 * (double)number1 / asPercentageOf;
     }
+
+	public int substract(int i, int i1) {
+		return i-i1;
+	}
 }
