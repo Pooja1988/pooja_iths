@@ -1,5 +1,5 @@
 
-1. I used Junit and Assertion for all 3 test cases.
+1. I used unit testing and exploratory testing for this.
 
 2. In first test case,I write test for camel case text.
    In second test case,I write test for change the string.

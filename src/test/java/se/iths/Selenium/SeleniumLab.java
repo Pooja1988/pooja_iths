@@ -44,6 +44,8 @@ public class SeleniumLab {
         driver.findElement(By.xpath("//*[@id=\"HOOK_PAYMENT\"]/div[1]/div/p/a")).click();
 
         driver.findElement(By.xpath("//*[@id=\"cart_navigation\"]/button/span")).submit();
+
+
     }
     }
 
