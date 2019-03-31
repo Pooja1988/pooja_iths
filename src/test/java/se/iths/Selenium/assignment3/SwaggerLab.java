@@ -58,7 +58,7 @@ public class SwaggerLab {
                 createUser1.getStatus());
 
         HttpResponse<String> userLoginWithWrongPwd = Unirest.get
-                ("https://petstore.swagger.io/v2/user/login?username=ps&password=test")
+                ("https://swagger-petstore.azurewebsites.net/v2/user/login?username=ps&password=test")
                 .asString();
         Assert.assertEquals(400,
                 userLoginWithWrongPwd.getStatus());
@@ -68,7 +68,7 @@ public class SwaggerLab {
 
     @Test
     public void createMultipleUserDetails() throws UnirestException {
-        HttpResponse<JsonNode> createMultipleUserDetails = Unirest.post("https://petstore.swagger.io/v2/user/createWithList")
+        HttpResponse<JsonNode> createMultipleUserDetails = Unirest.post("https://swagger-petstore.azurewebsites.net/v2/user/createWithList")
                 .header("Content-Type", "application/json")
                 .body("[\n" +
                         "  {\n" +
@@ -81,7 +81,7 @@ public class SwaggerLab {
                         "    \"phone\": \"00999\",\n" +
                         "    \"userStatus\": 0\n" +
                         "  }\n" +
-                        "][\n" +
+                        "  ,\n" +
                         "  {\n" +
                         "    \"id\": 11,\n" +
                         "    \"username\": \"Sp\",\n" +
@@ -103,12 +103,12 @@ public class SwaggerLab {
      Assert.assertEquals(200,
              MultipleUserLogin.getStatus());
 
-     HttpResponse<String> DelUser10=Unirest.delete("https://petstore.swagger.io/v2/user/ps")
+     HttpResponse<String> DelUser10=Unirest.delete("https://swagger-petstore.azurewebsites.net/v2/user/ps")
              .asString();
      Assert.assertEquals(200,
             DelUser10.getStatus());
 
-        HttpResponse<String> DelUser11=Unirest.delete("https://petstore.swagger.io/v2/user/:sp")
+        HttpResponse<String> DelUser11=Unirest.delete("https://swagger-petstore.azurewebsites.net/v2/user/:sp")
                 .asString();
         Assert.assertEquals(404,
                 DelUser11.getStatus());
@@ -119,24 +119,24 @@ public class SwaggerLab {
 @Test
     public void UpdateEmail() throws UnirestException{
 
-     HttpResponse<String> UserInfo=   Unirest.post("https://petstore.swagger.io/v2/user")
-
-                .header("Content-Type", "application/json")
-                .body("{\n" +
-                        "  \"id\": 10,\n" +
-                        "  \"username\": \"ps\",\n" +
-                        "  \"firstName\": \"Pooja\",\n" +
-                        "  \"lastName\": \"Rathore\",\n" +
-                        "  \"email\": \"Poojasolanki\",\n" +
-                        "  \"password\": \"sunny\",\n" +
-                        "  \"phone\": \"00999\",\n" +
-                        "  \"userStatus\": 0\n" +
-                        "}")
-                .asString();
+    HttpResponse<String> createUser = Unirest.post
+            ("https://swagger-petstore.azurewebsites.net/v2/user")
+            .header("Content-Type", "application/json")
+            .body("{\n" +
+                    "  \"id\": 10,\n" +
+                    "  \"username\": \"ps\",\n" +
+                    "  \"firstName\": \"Pooja\",\n" +
+                    "  \"lastName\": \"Rathore\",\n" +
+                    "  \"email\": \"Poojasolanki\",\n" +
+                    "  \"password\": \"sunny\",\n" +
+                    "  \"phone\": \"00999\",\n" +
+                    "  \"userStatus\": 0\n" +
+                    "}")
+            .asString();
      Assert.assertEquals(200,
-             UserInfo.getStatus());
+             createUser.getStatus());
 
-     HttpResponse<String> UpdateEmail = Unirest.put("https://petstore.swagger.io/v2/user/sp")
+     HttpResponse<String> UpdateEmail = Unirest.put("https://swagger-petstore.azurewebsites.net/v2/user/sp")
              .header("Content-Type","application/json")
              .body("{\n" +
                      "  \"id\": 10,\n" +
@@ -151,7 +151,7 @@ public class SwaggerLab {
              .asString();
      Assert.assertEquals(200,
              UpdateEmail.getStatus());
-     HttpResponse<String> UpdatedUser = Unirest.get("https://petstore.swagger.io/v2/user/ps")
+     HttpResponse<String> UpdatedUser = Unirest.get("https://swagger-petstore.azurewebsites.net/v2/user/ps")
              .asString();
      Assert.assertEquals(200,
            UpdatedUser.getStatus() );
