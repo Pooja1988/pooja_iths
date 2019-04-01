@@ -10,7 +10,7 @@ public class User {
         return new User("slask@apa.se", "slask", "070123678");
     }
 
-    private User(String username, String password, String phone) {
+    public User(String username, String password, String phone) {
         this.username = username;
         this.password = password;
         this.phone = phone;

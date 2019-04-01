@@ -8,17 +8,24 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.junit.Assert;
 import se.iths.Pet;
+import se.iths.Selenium.user.User;
 
+import java.util.Collections;
 import java.util.List;
 
 public class PetStoreClient {
 
-    ObjectMapper mapper = new ObjectMapper();
+    ObjectMapper mapper;
+
+    public PetStoreClient() {
+        mapper = new ObjectMapper();
+
+    }
 
     public void deletePet(int id) {
 
         try {
-            HttpResponse<String> deleteRsponse = Unirest.delete("http://petstore.swagger.io/v2/pet/" + id).asString();
+            HttpResponse<String> deleteRsponse = Unirest.delete("https://swagger-petstore.azurewebsites.net/v2/pet/" + id).asString();
 
             Assert.assertEquals(
                     200,
@@ -35,7 +42,7 @@ public class PetStoreClient {
             String fidoAsJson = mapper.writeValueAsString(myPet);
 
             HttpResponse<JsonNode> postPetResponse = Unirest
-                    .post("http://petstore.swagger.io/v2/pet/")
+                    .post("https://swagger-petstore.azurewebsites.net/v2/pet/")
                     .header("Content-Type", "application/json")
                     .body(fidoAsJson)
                     .asJson();
@@ -57,7 +64,7 @@ public class PetStoreClient {
         try {
 
             HttpResponse<String> getPetResponse = Unirest
-                    .get("http://petstore.swagger.io/v2/pet/" + id)
+                    .get("https://swagger-petstore.azurewebsites.net/v2/pet/" + id)
                     .asString();
 
             Pet myPet = mapper.readValue(
@@ -72,35 +79,73 @@ public class PetStoreClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
-        public List<Pet> getPetsByStatus(String status) {
+    public void createUser(User user) {
 
-            try {
+        try {
 
-                HttpResponse<String> postPetResponse = Unirest
-                        .get("https://swagger-petstore.azurewebsites.net/v2/pet/findByStatus")
-                        .header("Content-Type", "application/json")
-                        .queryString("status", status)
-                        .asString();
+            System.out.println(mapper.writeValueAsString(user));
+            HttpResponse<JsonNode> postPetResponse = Unirest
+                    .post("https://swagger-petstore.azurewebsites.net/v2/user/createWithList/")
+                    .header("Content-Type", "application/json")
+                    .body(mapper.writeValueAsString(Collections.singletonList(user)))
+                    .asJson();
 
-                if (postPetResponse.getStatus() == 200) {
-                    return mapper.readValue(
-                            postPetResponse.getBody(),
-                            new TypeReference<List<Pet>>(){}
-                    );
-                } else {
-                    throw new RuntimeException("Expected status 200");
-                }
+            Assert.assertEquals(200, postPetResponse.getStatus());
 
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean logIn(String username, String password) {
+        try {
+
+            HttpResponse<String> postPetResponse = Unirest
+                    .get("https://swagger-petstore.azurewebsites.net/v2/user/login")
+                    .header("Content-Type", "application/json")
+                    .queryString("user", username)
+                    .queryString("password", password)
+                    .asString();
+
+            if (postPetResponse.getStatus() == 200) {
+                return true;
+            } else {
+                return false;
             }
 
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
     }
+
+    public List<Pet> getPetsByStatus(String status) {
+
+        try {
+
+            HttpResponse<String> findPetByStatusResponse = Unirest
+                    .get("https://swagger-petstore.azurewebsites.net/v2/pet/findByStatus")
+                    .header("Content-Type", "application/json")
+                    .queryString("status", status)
+                    .asString();
+
+            if (findPetByStatusResponse.getStatus() == 200) {
+                return mapper.readValue(
+                        findPetByStatusResponse.getBody(),
+                        new TypeReference<List<Pet>>(){}
+                );
+            } else {
+                throw new RuntimeException("Expected status 200");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+
+
+
 
 
 
