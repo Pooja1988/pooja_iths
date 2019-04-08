@@ -108,9 +108,9 @@ public class SwaggerLab {
      Assert.assertEquals(200,
             DelUser10.getStatus());
 
-        HttpResponse<String> DelUser11=Unirest.delete("https://swagger-petstore.azurewebsites.net/v2/user/:sp")
+        HttpResponse<String> DelUser11=Unirest.delete("https://swagger-petstore.azurewebsites.net/v2/user/Sp")
                 .asString();
-        Assert.assertEquals(404,
+        Assert.assertEquals(200,
                 DelUser11.getStatus());
 
 
