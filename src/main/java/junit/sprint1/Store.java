@@ -1,4 +1,6 @@
-package mimic;
+package junit.sprint1;
+
+import junit.sprint1.RequestResponse;
 
 import java.util.Hashtable;
 
