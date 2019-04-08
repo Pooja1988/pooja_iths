@@ -65,7 +65,7 @@ public class Cucumberlab {
                 createUser1.getStatus());
 
         HttpResponse<String> userLoginWithWrongPwd = Unirest.get
-                ("https://petstore.swagger.io/v2/user/login?username=ps&password=sunny")
+                ("https://swagger-petstore.azurewebsites.net/v2/user/login?username=ps&password=sunny")
                 .asString();
         Assert.assertEquals(200,
                 userLoginWithWrongPwd.getStatus());
@@ -93,7 +93,7 @@ public class Cucumberlab {
                 createUser1.getStatus());
 
         HttpResponse<String> userLoginWithWrongPwd = Unirest.get
-                ("https://petstore.swagger.io/v2/user/login?username=ps&password=test")
+                ("https://swagger-petstore.azurewebsites.net/v2/user/login?username=ps&password=test")
                 .asString();
         Assert.assertEquals(200,
                 userLoginWithWrongPwd.getStatus());
@@ -103,7 +103,7 @@ public class Cucumberlab {
 
     @Then("create multiple user")
     public void create_multiple_user() throws UnirestException {
-        HttpResponse<JsonNode> createMultipleUserDetails = Unirest.post("https://petstore.swagger.io/v2/user/createWithList")
+        HttpResponse<JsonNode> createMultipleUserDetails = Unirest.post("https://swagger-petstore.azurewebsites.net/v2/user/createWithList")
                 .header("Content-Type", "application/json")
                 .body("[\n" +
                         "  {\n" +
@@ -139,14 +139,14 @@ public class Cucumberlab {
         Assert.assertEquals(200,
                 MultipleUserLogin.getStatus());
 
-        HttpResponse<String> DelUser10=Unirest.delete("https://petstore.swagger.io/v2/user/ps")
+        HttpResponse<String> DelUser10=Unirest.delete("https://swagger-petstore.azurewebsites.net/v2/user/ps")
                 .asString();
-        Assert.assertEquals(500,
+        Assert.assertEquals(200,
                 DelUser10.getStatus());
 
-        HttpResponse<String> DelUser11=Unirest.delete("https://petstore.swagger.io/v2/user/:sp")
+        HttpResponse<String> DelUser11=Unirest.delete("https://swagger-petstore.azurewebsites.net/v2/user/Sp")
                 .asString();
-        Assert.assertEquals(500,
+        Assert.assertEquals(200,
                 DelUser11.getStatus());
 
 
@@ -156,7 +156,7 @@ public class Cucumberlab {
     @Then("create user with updated email")
     public void create_user_with_updated_email() throws UnirestException {
 
-        HttpResponse<String> UserInfo=   Unirest.post("https://petstore.swagger.io/v2/user")
+        HttpResponse<String> UserInfo=   Unirest.post("https://swagger-petstore.azurewebsites.net/v2/user")
 
                 .header("Content-Type", "application/json")
                 .body("{\n" +
@@ -170,10 +170,10 @@ public class Cucumberlab {
                         "  \"userStatus\": 0\n" +
                         "}")
                 .asString();
-        Assert.assertEquals(500,
+        Assert.assertEquals(200,
                 UserInfo.getStatus());
 
-        HttpResponse<String> UpdateEmail = Unirest.put("https://petstore.swagger.io/v2/user/sp")
+        HttpResponse<String> UpdateEmail = Unirest.put("https://swagger-petstore.azurewebsites.net/v2/user/sp")
                 .header("Content-Type","application/json")
                 .body("{\n" +
                         "  \"id\": 10,\n" +
@@ -186,11 +186,11 @@ public class Cucumberlab {
                         "  \"userStatus\": 0\n" +
                         "}")
                 .asString();
-        Assert.assertEquals(500,
+        Assert.assertEquals(200,
                 UpdateEmail.getStatus());
-        HttpResponse<String> UpdatedUser = Unirest.get("https://petstore.swagger.io/v2/user/ps")
+        HttpResponse<String> UpdatedUser = Unirest.get("https://swagger-petstore.azurewebsites.net/v2/user/ps")
                 .asString();
-        Assert.assertEquals(500,
+        Assert.assertEquals(200,
                 UpdatedUser.getStatus() );
 
     }
